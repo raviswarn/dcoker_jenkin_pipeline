@@ -16,7 +16,7 @@ node {
   stage ('Run Application') {
     try {
       // Start database container here
-      sh 'docker run -d --name db -p 8091-8093:8091-8093 -p 11210:11210 arungupta/oreilly-couchbase:latest'
+      sh 'docker run -d --name db -p 8091-8093:8091-8093 -p 11210:11210 arungupta/oreilly-couchbase'
 
       // Run application using Docker image
       sh "DB=`docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' db`"
@@ -24,7 +24,7 @@ node {
 
       // Run tests using Maven
       //dir ('webapp') {
-      //  sh 'mvn exec:java -DskipTests'
+      sh 'mvn exec:java -DskipTests'
       //}
     } catch (error) {
     } finally {
